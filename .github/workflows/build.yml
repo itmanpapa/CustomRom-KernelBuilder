@@ -317,7 +317,9 @@ jobs:
             ;;
 
             "clang-r563880c")
-            curl -LO https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/android16-qpr2-release/clang-r563880c.tar.gz || exit 1
+            git clone --filter=blob:none --no-checkout --depth=1 -b android16-qpr2-release https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86 aosp-clang || exit 1
+            cd aosp-clang && git sparse-checkout set clang-r563880c && git checkout || exit 1
+            cd .. && tar -czf clang-r563880c.tar.gz -C aosp-clang/clang-r563880c . && rm -rf aosp-clang || exit 1
             ;;
 
           esac
